@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiệp 20/10 Gửi Vợ Yêu 💝</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Dancing Script', cursive;
+      background: url('your-background.jpg') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .gift-box, .envelope, .letter, .final-photo {
+      position: absolute;
+      transition: all 1s ease;
+    }
+
+    /* Hộp quà */
+    .gift-box {
+      width: 180px;
+      height: 180px;
+      background: pink;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      color: white;
+      text-shadow: 1px 1px 4px #d63384;
+    }
+
+    /* Phong thư */
+    .envelope {
+      width: 220px;
+      height: 140px;
+      background: #f8c8dc;
+      border: 2px solid #f5a3c7;
+      border-radius: 8px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
+    }
+
+    /* Tờ giấy */
+    .letter {
+      width: 300px;
+      height: 200px;
+      background: white;
+      border: 3px dashed pink;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 0 25px rgba(255, 182, 193, 0.6);
+    }
+
+    .hearts {
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      color: pink;
+      font-size: 24px;
+    }
+
+    .hearts.right {
+      right: 10px;
+      left: auto;
+    }
+
+    .bunnies {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+    }
+
+    .bunny {
+      width: 30px;
+      height: 30px;
+      background: white;
+      border-radius: 50%;
+      position: relative;
+      animation: hop 1s infinite alternate;
+    }
+
+    .bunny::before, .bunny::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      top: -18px;
+    }
+
+    .bunny::before {
+      left: 5px;
+      transform: rotate(-10deg);
+    }
+
+    .bunny::after {
+      right: 5px;
+      transform: rotate(10deg);
+    }
+
+    @keyframes hop {
+      from { transform: translateY(0) }
+      to { transform: translateY(-15px) }
+    }
+
+    .message {
+      font-size: 20px;
+      color: #d63384;
+      white-space: pre-wrap;
+      overflow: hidden;
+      border-right: 2px solid pink;
+      width: 0;
+      animation: typing 6s steps(80, end) forwards, blink 0.6s step-end infinite alternate;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    /* Ảnh cuối cùng */
+    .final-photo {
+      width: 250px;
+      height: auto;
+      border-radius: 12px;
+      display: none;
+      opacity: 0;
+      box-shadow: 0 0 40px rgba(255, 105, 180, 0.7);
+      transition: opacity 2s ease;
+    }
+
+    .show {
+      display: flex !important;
+    }
+
+    .fade-in {
+      opacity: 1 !important;
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-music" loop>
+      <source src="honcayeu.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+    <div class="gift-box" id="giftBox">🎁</div>
+    <div class="envelope" id="envelope">💌</div>
+    <div class="letter" id="letter">
+      <div class="hearts">💖</div>
+      <div class="hearts right">💖</div>
+      <div class="message" id="message"></div>
+      <div class="bunnies">
+        <div class="bunny" style="animation-delay: 0s"></div>
+        <div class="bunny" style="animation-delay: 0.5s"></div>
+      </div>
+    </div>
+    <!-- Thay link ảnh của vợ bạn vào đây -->
+    <img src="anh.jpg" alt="Vợ Yêu" class="final-photo" id="finalPhoto" />
+  </div>
+
+  <script>
+    const giftBox = document.getElementById('giftBox');
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+    const messageEl = document.getElementById('message');
+    const finalPhoto = document.getElementById('finalPhoto');
+    const bgMusic = document.getElementById('bg-music');
+
+    const message = "20/10 chúc vợ yêu ngày càng xinh, da càng mịn, tóc càng thơm,\n" +
+                    "và đặc biệt… càng thương chồng nhiều hơn nữa (vì chồng dễ thương cực kỳ mà 🐰).";
+
+    giftBox.addEventListener('click', () => {
+      giftBox.style.opacity = 0;
+      setTimeout(() => {
+        giftBox.style.display = 'none';
+        envelope.style.display = 'flex';
+        bgMusic.play().catch(()=>{});
+      }, 1000);
+    });
+
+    envelope.addEventListener('click', () => {
+      envelope.style.opacity = 0;
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        letter.style.display = 'flex';
+        setTimeout(() => {
+          messageEl.textContent = message;
+          messageEl.classList.add('message');
+          // Kết thúc typing
+          setTimeout(() => {
+            letter.style.opacity = 0;
+            setTimeout(() => {
+              letter.style.display = 'none';
+              finalPhoto.classList.add('show');
+              setTimeout(() => finalPhoto.classList.add('fade-in'), 200);
+            }, 2000);
+          }, 7000);
+        }, 500);
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
