@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thư gửi Em - 20/10 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink1: #fce4ec;
+      --pink2: #f8bbd0;
+      --accent: #ff80ab;
+      --white: #fff;
+    }
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(160deg, var(--pink1), var(--pink2));
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .envelope {
+      position: relative;
+      width: 340px;
+      height: 240px;
+      background: #f48fb1;
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      overflow: hidden;
+    }
+
+    /* Nắp thư */
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #ec407a;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform 1s ease;
+      z-index: 3;
+    }
+
+    /* Tờ giấy bên trong */
+    .letter {
+      position: absolute;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      height: 180px;
+      background: var(--white);
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      padding: 20px;
+      text-align: center;
+      font-family: "Dancing Script", cursive;
+      font-size: 1.2rem;
+      color: #ad1457;
+      line-height: 1.8;
+      transition: bottom 1.5s ease;
+      overflow: hidden;
+    }
+
+    .btn {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 0 15px rgba(255, 64, 129, 0.5);
+      z-index: 5;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px rgba(255,64,129,0.5); }
+      50% { box-shadow: 0 0 25px rgba(255,64,129,0.9); }
+      100% { box-shadow: 0 0 10px rgba(255,64,129,0.5); }
+    }
+
+    /* Trái tim bay */
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      color: #ff80ab;
+      opacity: 0;
+      transform: translateY(0);
+      animation: floatUp 6s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(30vh) scale(0.8); opacity: 1; }
+      70% { opacity: 1; }
+      100% { transform: translateY(-60vh) scale(1.4); opacity: 0; }
+    }
+
+    h2 {
+      font-family: "Dancing Script", cursive;
+      font-size: 1.6rem;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h2>💌 Happy 20/10 My Love ❤</h2>
+    <div class="envelope">
+      <div class="flap" id="flap"></div>
+      <div class="letter" id="letter">
+        <div id="msg"></div>
+      </div>
+      <button class="btn" id="openBtn">Mở thư</button>
+    </div>
+  </div>
+
+  <audio id="music" preload="auto" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_34c401a501.mp3?filename=piano-romantic-soft-ambient-124842.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const openBtn = document.getElementById('openBtn');
+    const flap = document.getElementById('flap');
+    const letter = document.getElementById('letter');
+    const msg = document.getElementById('msg');
+    const music = document.getElementById('music');
+
+    const messages = [
+      "Gửi em yêu của anh 💖",
+      "Ngày 20/10 này, anh chúc em luôn xinh đẹp, tươi cười và hạnh phúc mỗi ngày 🌷",
+      "Cảm ơn em đã làm cuộc sống anh tràn ngập sắc hồng 💕",
+      "Em là lý do khiến mỗi sáng anh muốn thức dậy sớm hơn một chút 😘",
+      "Anh yêu em... hơn cả ly trà sữa topping đầy 😆💞"
+    ];
+
+    function spawnHeart() {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.textContent = '❤';
+      h.style.left = Math.random() * 90 + 'vw';
+      h.style.fontSize = (14 + Math.random() * 24) + 'px';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 6000);
+    }
+
+    let heartInterval;
+
+    openBtn.addEventListener('click', () => {
+      flap.style.transform = 'rotateX(180deg)';
+      setTimeout(() => {
+        letter.style.bottom = '10px';
+        music.play().catch(()=>{});
+        heartInterval = setInterval(spawnHeart, 500);
+      }, 700);
+
+      // Hiệu ứng gõ lời chúc từng dòng
+      let i = 0;
+      msg.textContent = "";
+      const typeEffect = setInterval(() => {
+        if (i < messages.length) {
+          msg.innerHTML += (msg.innerHTML ? "<br><br>" : "") + messages[i];
+          i++;
+        } else {
+          clearInterval(typeEffect);
+        }
+      }, 1600);
+    });
+  </script>
+</body>
+</html>
