@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thiệp 20/10 Gửi Vợ Yêu 💝</title>
+
+  <style>
+    /* --- Font chữ mềm mại --- */
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('nen.jpg') no-repeat center center/cover;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .gift-box, .envelope, .letter, .final-photo {
+      position: absolute;
+      transition: all 0.8s ease;
+    }
+
+    /* 🎁 Hộp quà */
+    .gift-box {
+      width: 200px;
+      height: 200px;
+      border-radius: 20px;
+      background: linear-gradient(145deg,#ff9ac9,#ff6fa6);
+      box-shadow: 0 8px 40px rgba(255,105,180,0.55);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size: 36px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* 💌 Phong thư (mảnh, tơ) */
+    .envelope {
+      width: 320px;
+      height: 200px;
+      background: rgba(255,192,203,0.22);
+      backdrop-filter: blur(4px);
+      border-radius: 10px;
+      border: 2px solid rgba(255,182,193,0.8);
+      box-shadow: 0 6px 25px rgba(255,182,193,0.45);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 34px;
+    }
+
+    /* 📜 Tờ giấy chứa lời chúc */
+    .letter {
+      width: 360px;
+      height: 260px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 8px 40px rgba(255,192,203,0.7);
+      border: 3px dashed rgba(255,150,200,0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hearts {
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      font-size: 22px;
+    }
+    .hearts.right { right: 12px; left: auto; }
+
+    .bunnies {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display:flex;
+      gap: 34px;
+      z-index: 3;
+    }
+
+    .bunny {
+      width: 28px;
+      height: 28px;
+      background: #fff;
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      animation: hop 1s infinite alternate;
+    }
+    .bunny::before, .bunny::after {
+      content:'';
+      position:absolute;
+      width:9px;height:18px;
+      background:#fff;border-radius:50%;
+      top:-16px;
+    }
+    .bunny::before { left:4px; transform: rotate(-10deg); }
+    .bunny::after { right:4px; transform: rotate(10deg); }
+
+    @keyframes hop {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-12px); }
+    }
+
+    /* --- Vùng chứa chữ --- */
+    .message-wrapper {
+      width: 100%;
+      max-width: 86%;
+      height: calc(100% - 80px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: hidden;
+      padding-right: 6%;
+    }
+
+    /* ✨ Mỗi dòng trồi lên có hiệu ứng fade & scale nhẹ */
+    .line {
+      font-size: 22px;
+      color: #d63384;
+      line-height: 1.5;
+      margin: 6px 0;
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(.25,.8,.25,1);
+      width: 100%;
+      text-align: left;
+    }
+
+    .line.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    /* 📸 Ảnh cuối */
+    .final-photo {
+      width: 270px;
+      border-radius: 14px;
+      display: none;
+      opacity: 0;
+      box-shadow: 0 0 40px rgba(255,105,180,0.6);
+      transition: opacity 1.8s ease;
+      z-index: 2;
+    }
+
+    .show { display: flex !important; }
+    .fade-in { opacity: 1 !important; }
+
+    /* ❤️ Tim bay khi ảnh xuất hiện */
+    .heart {
+      position: absolute;
+      color: rgba(255,182,193,0.7);
+      font-size: 20px;
+      opacity: 0;
+      animation: floatUp 4s linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-250px) scale(1.6);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive nhỏ hơn */
+    @media (max-width: 420px) {
+      .letter { width: 300px; height: 240px; }
+      .envelope { width: 280px; height: 180px; }
+      .gift-box { width: 160px; height:160px; font-size:28px; }
+      .line { font-size: 20px; }
+      .final-photo { width: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-music" loop>
+    <source src="honcayeu.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+    <div class="gift-box" id="giftBox">🎁</div>
+    <div class="envelope" id="envelope">💌</div>
+
+    <div class="letter" id="letter">
+      <div class="hearts">💖</div>
+      <div class="hearts right">💖</div>
+      <div class="message-wrapper" id="messageWrapper"></div>
+      <div class="bunnies">
+        <div class="bunny" style="animation-delay:0s"></div>
+        <div class="bunny" style="animation-delay:0.4s"></div>
+      </div>
+    </div>
+
+    <img id="finalPhoto" class="final-photo" src="anh.jpg" alt="Vợ Yêu">
+  </div>
+
+  <script>
+    const giftBox = document.getElementById('giftBox');
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+    const messageWrapper = document.getElementById('messageWrapper');
+    const finalPhoto = document.getElementById('finalPhoto');
+    const bgMusic = document.getElementById('bg-music');
+
+    const rawMessage = 
+      "20/10 chúc vợ yêu ngày càng xinh, da càng mịn, tóc càng thơm,\n" +
+      "và đặc biệt… càng thương chồng nhiều hơn nữa (vì chồng dễ thương cực kỳ mà 🐰).";
+
+    const lines = rawMessage.split('\n').map(s => s.trim()).filter(Boolean);
+    const lineDelay = 900; 
+    const afterAllHold = 1800;
+
+    giftBox.addEventListener('click', () => {
+      giftBox.style.opacity = 0;
+      setTimeout(() => {
+        giftBox.style.display = 'none';
+        envelope.style.display = 'flex';
+        bgMusic.play().catch(()=>{});
+      }, 900);
+    });
+
+    envelope.addEventListener('click', () => {
+      envelope.style.opacity = 0;
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        letter.style.display = 'flex';
+        setTimeout(startLinesAnimation, 500);
+      }, 800);
+    });
+
+    function startLinesAnimation() {
+      messageWrapper.innerHTML = '';
+      lines.forEach((text, idx) => {
+        const div = document.createElement('div');
+        div.className = 'line';
+        div.textContent = text;
+        messageWrapper.appendChild(div);
+
+        setTimeout(() => {
+          div.classList.add('show');
+        }, idx * lineDelay);
+      });
+
+      const totalTime = (lines.length - 1) * lineDelay + 800 + afterAllHold;
+      setTimeout(() => {
+        letter.style.opacity = 0;
+        setTimeout(() => {
+          letter.style.display = 'none';
+          showFinalPhoto();
+        }, 700);
+      }, totalTime);
+    }
+
+    function showFinalPhoto() {
+      finalPhoto.classList.add('show');
+      setTimeout(() => finalPhoto.classList.add('fade-in'), 150);
+      bgMusic.play().catch(()=>{});
+
+      // Bắt đầu tim bay
+      startFloatingHearts();
+    }
+
+    function startFloatingHearts() {
+      const container = document.querySelector('.container');
+      let heartCount = 0;
+      const heartInterval = setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '💖';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = (16 + Math.random() * 14) + 'px';
+        heart.style.opacity = 0.4 + Math.random() * 0.4;
+        container.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 4000);
+
+        heartCount++;
+        if (heartCount > 40) clearInterval(heartInterval);
+      }, 250);
+    }
+  </script>
+</body>
+</html>
