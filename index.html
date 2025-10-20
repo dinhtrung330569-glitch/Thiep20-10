@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 20/10 My Love ❤</title>
+  <style>
+    :root {
+      --pink1: #f8bbd0;
+      --pink2: #f48fb1;
+      --bg: #fce4ec;
+      --text: #fff;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--bg);
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(160deg, var(--pink1), var(--pink2));
+    }
+
+    .card {
+      width: 360px;
+      height: 560px;
+      max-width: 94vw;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      background: linear-gradient(180deg, #f48fb1, #f8bbd0);
+    }
+
+    .cover {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, var(--pink1), var(--pink2));
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform 0.8s ease, opacity 0.6s ease;
+      z-index: 10;
+    }
+
+    .cover h1 {
+      font-size: 1.5rem;
+      margin: 0 12px;
+      text-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .open-btn {
+      margin-top: 16px;
+      background: #d81b60;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+    }
+
+    .inside {
+      position: absolute;
+      inset: 0;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      overflow: hidden;
+    }
+
+    .msg-box {
+      margin-top: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 1rem;
+      line-height: 1.6;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      display: none;
+    }
+
+    /* Trái tim bay */
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      z-index: 8;
+      opacity: 0;
+      transform: translateY(0) scale(0.8);
+      animation: floatUp 5s linear forwards;
+      pointer-events: none;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(30vh) scale(0.7); opacity: 1; }
+      60% { opacity: 1; }
+      100% { transform: translateY(-40vh) scale(1.4); opacity: 0; }
+    }
+
+    @media (max-width: 420px) {
+      .card { height: 85vh; }
+      .cover h1 { font-size: 1.25rem; }
+      .msg-box { font-size: 0.96rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="cover" id="cover">
+        <h1>💌 Happy 20/10 My Love ❤</h1>
+        <button class="open-btn" id="openBtn">Mở thiệp</button>
+      </div>
+
+      <div class="inside" id="inside">
+        <div class="msg-box" id="msgBox"></div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="music" preload="auto" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_34c401a501.mp3?filename=piano-romantic-soft-ambient-124842.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const messages = [
+      "Hôm nay là 20/10,",
+      "Anh xin gửi đến người phụ nữ quyền lực nhất trong nhà — chính là em! 💕",
+      "Cảm ơn em vì đã cho anh biết:",
+      "• Hạnh phúc là gì ❤️",
+      "• Nhưng… 'rắc rối' cũng là gì 😅",
+      "Dù em có 'lắm chiêu' thế nào, anh vẫn chỉ muốn ở bên em —",
+      "Vì xa em, nhà trống trơn… và ví anh cũng trống theo! 😂",
+      "Yêu em hơn cả 20/10, hơn cả năm 2025, và hơn cả… chính anh luôn! 💞"
+    ];
+
+    const cover = document.getElementById('cover');
+    const openBtn = document.getElementById('openBtn');
+    const inside = document.getElementById('inside');
+    const msgBox = document.getElementById('msgBox');
+    const music = document.getElementById('music');
+
+    function spawnHeart() {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.left = Math.random() * 80 + 'vw';
+      h.style.fontSize = (12 + Math.random() * 28) + 'px';
+      h.style.color = `hsl(${330 + Math.random() * 20},80%,70%)`;
+      h.textContent = '❤';
+      document.body.appendChild(h);
+      setTimeout(() => { h.remove(); }, 5200);
+    }
+
+    let heartInterval;
+
+    openBtn.addEventListener('click', () => {
+      cover.style.transform = 'translateY(-110%) scale(0.98)';
+      cover.style.opacity = '0';
+      inside.style.opacity = '1';
+      msgBox.style.display = 'block';
+      music.play().catch(() => {});
+      
+      let i = 0;
+      msgBox.innerHTML = '';
+      const timer = setInterval(() => {
+        if (i < messages.length) {
+          const d = document.createElement('div');
+          d.textContent = messages[i];
+          msgBox.appendChild(d);
+          i++;
+          msgBox.scrollTop = msgBox.scrollHeight;
+        } else {
+          clearInterval(timer);
+        }
+      }, 1800);
+
+      heartInterval = setInterval(spawnHeart, 400);
+      setTimeout(() => clearInterval(heartInterval), 20000);
+    });
+  </script>
+</body>
+</html>
